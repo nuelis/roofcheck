@@ -1,0 +1,201 @@
+/*
+  Design brief: a tool a roofer opens on a phone at the truck.
+  Palette from the trade: galvanized flashing (page), tar (text), chalk-line blue (actions),
+  hi-vis yellow (marker, used only on numbers and flags).
+  Type: Barlow Condensed (job-site signage) for headings and counts, Public Sans for reading.
+  One idea: the marker stroke. It only ever highlights a quantity or a count.
+*/
+
+:root {
+  --galv: #dee3e8;
+  --sheet: #f8fafb;
+  --tar: #18212b;
+  --tar-soft: #4a5866;
+  --chalk: #1f4fd8;
+  --chalk-dark: #173db0;
+  --hivis: #ffd60a;
+  --red: #b42318;
+  --line: #b9c2cb;
+  --display: var(--font-display, 'Arial Narrow'), 'Helvetica Neue', Arial, sans-serif;
+  --body: var(--font-body, system-ui), system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--galv);
+  color: var(--tar);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 20px 20px 72px;
+}
+
+@media (min-width: 1000px) {
+  .wrap { margin-left: 12vw; padding-top: 40px; }
+}
+
+.brand {
+  margin: 0 0 40px;
+  font-family: var(--display);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+h1 {
+  margin: 0 0 16px;
+  font-family: var(--display);
+  font-size: clamp(42px, 11vw, 64px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.005em;
+}
+
+h2 {
+  margin: 36px 0 12px;
+  font-family: var(--display);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+h3 {
+  margin: 0 0 4px;
+  font-family: var(--display);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.lede { margin: 0 0 28px; max-width: 34em; color: var(--tar-soft); }
+
+/* Upload target: the chalk line */
+.drop {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  min-height: 168px;
+  padding: 24px;
+  border: 2px dashed var(--chalk);
+  background: var(--sheet);
+  cursor: pointer;
+}
+.drop:hover, .drop.over { background: #e6edfc; }
+.drop:focus-within { outline: 3px solid var(--tar); outline-offset: 3px; }
+.drop input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+}
+.drop-title { font-family: var(--display); font-size: 32px; font-weight: 700; color: var(--chalk); line-height: 1.1; }
+.drop-sub { color: var(--tar-soft); }
+
+.link {
+  min-height: 48px;
+  margin-top: 8px;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--chalk);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.link:focus-visible, .btn:focus-visible, .paste summary:focus-visible {
+  outline: 3px solid var(--tar);
+  outline-offset: 3px;
+}
+
+.status, .error { margin: 12px 0 0; }
+.error { color: var(--red); font-weight: 600; }
+
+.chalk { margin: 44px 0 28px; border: 0; border-top: 3px solid var(--chalk); }
+
+/* Results */
+.count { margin: 0; font-family: var(--display); font-size: 56px; font-weight: 700; line-height: 1; }
+.num { box-shadow: inset 0 -0.3em 0 var(--hivis); padding: 0 0.1em; }
+.sub { margin: 10px 0 0; color: var(--tar-soft); }
+.none { margin: 20px 0 0; }
+
+.warnings { margin: 20px 0 0; padding: 12px 16px 12px 32px; border-left: 4px solid var(--red); background: var(--sheet); }
+.warnings li { margin: 4px 0; }
+
+.finds { margin: 0; padding: 0; list-style: none; }
+.find { margin: 0 0 10px; padding: 16px 16px 12px 18px; background: var(--sheet); }
+.find.likely { border-left: 8px solid var(--hivis); }
+.find.verify { border-left: 3px dashed var(--tar-soft); }
+.add { margin: 0; font-weight: 600; }
+.qty {
+  margin-left: 8px;
+  padding: 0 4px;
+  box-shadow: inset 0 -0.45em 0 var(--hivis);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.why { margin: 6px 0 0; color: var(--tar-soft); }
+.ref { margin: 4px 0 0; color: var(--tar-soft); font-size: 15px; }
+
+.check { display: flex; gap: 12px; align-items: center; min-height: 48px; margin-top: 6px; cursor: pointer; }
+.check input { width: 24px; height: 24px; flex: none; accent-color: var(--chalk); }
+
+/* Letter */
+.fields { display: grid; gap: 14px; margin-bottom: 18px; }
+.fields label { display: grid; gap: 4px; font-weight: 600; }
+input[type='text'], textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: #fff;
+  color: var(--tar);
+  font: inherit;
+  font-weight: 400;
+}
+input[type='text']:focus-visible, textarea:focus-visible { outline: 3px solid var(--chalk); outline-offset: 1px; }
+
+.letter {
+  margin: 0 0 16px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  background: var(--sheet);
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.btn {
+  min-height: 52px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 2px;
+  background: var(--chalk);
+  color: #fff;
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn:hover { background: var(--chalk-dark); }
+.copied { margin-left: 14px; font-weight: 600; }
+
+.paste { margin-top: 48px; }
+.paste summary { min-height: 48px; padding: 12px 0; color: var(--chalk); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.paste textarea { display: block; margin: 8px 0 12px; }
+
+.fine { margin: 40px 0 0; max-width: 36em; color: var(--tar-soft); font-size: 14px; }
